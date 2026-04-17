@@ -12,9 +12,15 @@ intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 
+import os
+
 def load_env_token():
-    if not TOKEN_FILE.exists():
-        raise FileNotFoundError(".env file not found")
+    token = os.getenv("DISCORD_BOT_TOKEN")
+
+    if not token:
+        raise ValueError("DISCORD_BOT_TOKEN not found")
+
+    return token
 
     with open(TOKEN_FILE, "r", encoding="utf-8") as f:
         for line in f:
